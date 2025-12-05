@@ -50,6 +50,25 @@ pub fn testar_mysql(porta: u16) -> bool {
     }
 }
 
+pub fn testar_mariadb(porta: u16) -> bool {
+    let args = [
+        "-h", "127.0.0.1",
+        "-P", &porta.to_string(),
+        "-u", "root",
+        "-e", "SELECT 1",
+    ];
+
+    let output = Command::new("mariadb")
+        .args(&args)
+        .output();
+
+    match output {
+        Ok(o) => o.status.success(),
+        Err(_) => false,
+    }
+}
+
+
 pub fn buscar_portas_automatico() -> Vec<ResultadoPorta> {
     let portas = [5432, 5433, 3306];
     let mut resultados = Vec::new();
