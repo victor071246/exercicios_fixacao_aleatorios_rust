@@ -1,5 +1,5 @@
 use std::net::TcpStream;
-use std::process::Command;
+use std::process::{Command, Output};
 
 pub enum InfoServico {
     ServicoInexistente,
@@ -56,16 +56,17 @@ pub fn testar_mariadb(porta: u16) -> bool {
         "-P", &porta.to_string(),
         "-u", "root",
         "-e", "SELECT 1",
-    ];
+  ];
 
-    let output = Command::new("mariadb")
-        .args(&args)
-        .output();
+  let output = Command::new("mariadb")
+    .args(&args)
+    .output();
 
-    match output {
-        Ok(o) => o.status.success(),
-        Err(_) => false,
-    }
+  match output {
+    Ok(o ) => o.status.success(),
+    Err(_) => false,
+  }
+    
 }
 
 
