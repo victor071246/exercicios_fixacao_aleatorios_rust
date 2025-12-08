@@ -69,7 +69,6 @@ pub fn testar_mariadb(porta: u16) -> bool {
     
 }
 
-
 pub fn buscar_portas_automatico() -> Vec<ResultadoPorta> {
     let portas = [5432, 5433, 3306];
     let mut resultados = Vec::new();
@@ -85,6 +84,17 @@ pub fn buscar_portas_automatico() -> Vec<ResultadoPorta> {
             if porta == 5432 || porta == 5433  && testar_postgres(porta) {
                 r.info = InfoServico::PostgreSQL;
             }
+
+            if porta == 3306 {
+                if 
+                testar_mariadb(porta) {
+                    r.info = InfoServico::MariaDB;    
+                }
+                else if testar_mysql(porta) {
+                    r.info = InfoServico::MySQL;
+                } 
+            }
+
 
             resultados.push(r);
         }
